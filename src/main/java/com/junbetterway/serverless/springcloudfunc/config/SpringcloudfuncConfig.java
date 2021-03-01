@@ -4,6 +4,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import com.junbetterway.serverless.springcloudfunc.functions.CreateAccount;
+import com.junbetterway.serverless.springcloudfunc.functions.ReadAccount;
 import com.junbetterway.serverless.springcloudfunc.functions.ReadAllAccounts;
 import com.junbetterway.serverless.springcloudfunc.repository.AccountRepository;
 
@@ -23,6 +24,11 @@ public class SpringcloudfuncConfig {
 	@Bean
 	public ReadAllAccounts readAllAccounts() {
 		return new ReadAllAccounts(repository);
+	}
+
+	@Bean
+	public ReadAccount readAccount() {
+		return new ReadAccount(repository);
 	}
 	
 }
