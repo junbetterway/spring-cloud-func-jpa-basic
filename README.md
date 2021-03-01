@@ -1,7 +1,7 @@
 # Java Spring Cloud Function Basic With Spring Data JPA
 Please check out my previous __[tutorial](https://github.com/junbetterway/spring-cloud-func-basic)__ which provides a basic introduction on using __[Spring Cloud Function](https://spring.io/projects/spring-cloud-function)__. 
 
-This time, we will integrate Spring Cloud Function with H2 database together with __[Spring Data JPA](https://spring.io/projects/spring-data-jpa)__. There will be two exposed endpoints for our previous __Account module__ - create and readAll. 
+This time, we will integrate Spring Cloud Function with H2 database together with __[Spring Data JPA](https://spring.io/projects/spring-data-jpa)__. Also, there will now be three exposed endpoints for our previous __Account module__ - create, read and readAll. 
 
 *__Note:__ We will use the __traditional bean definitions__ instead of the __functional bean style__ since the latter is not yet supported because the functional form of the embedded Servlet container has not yet been implemented - see __[SpringcloudfuncConfig](https://github.com/junbetterway/spring-cloud-func-jpa-basic/blob/main/src/main/java/com/junbetterway/serverless/springcloudfunc/config/SpringcloudfuncConfig.java)__.class on how we did this.*
 
@@ -21,6 +21,11 @@ public class SpringcloudfuncConfig {
 	public ReadAllAccounts readAllAccounts() {
 		return new ReadAllAccounts(repository);
 	}
+
+	@Bean
+	public ReadAccount readAccount() {
+		return new ReadAccount(repository);
+	}
 	
 }
 ```
@@ -37,7 +42,13 @@ Now one can invoke the two endpoints in any API tool such as Postman or cURL. Us
 curl -H "Content-type: application/json" -X POST -d '{"name":"Jun King Minon", "balance": 12000}' http://localhost:8080/createAccount
 ```
 
-2. Read ALL Accounts function by:
+2. Read Account using its ID function by:
+
+```
+curl http://localhost:8080/readAccount/{ID}
+```
+
+3. Read ALL Accounts function by:
 
 ```
 curl http://localhost:8080/readAllAccounts
